@@ -1,11 +1,10 @@
 function clock() {
 
-    var div = document.createElement("div");
+    let div = document.createElement("div");
     div.id = "time";
-    
 
     function currentTime() {
-        var date = new Date();
+        let date = new Date();
         hour = date.getHours();
         min = date.getMinutes();
         sec = date.getSeconds();
@@ -13,14 +12,28 @@ function clock() {
         hour = updateTime(hour);
         min = updateTime(min);
         sec = updateTime(sec);
-        document.getElementById("time").innerText = hour + " : " + min + " : " + sec;
+        document.getElementById("time").innerText = "Good     " + hour + " : " + min + " : " + sec + updatePartOfDay();
         document.getElementById("time").setAttribute(
             "style",
-            "font-size: 24px; font-weight: bold; background-color: yellow; text-align: center; display: inline; border: 3px solid black; padding: 5px; border-radius: 20px"
+            "font-size: 24px; font-weight: bold; text-align: center; display: grid; justify-content: space-around; border: 3px solid black; padding: 5px; border-radius: 20px;",
             
         );
-        var t = setTimeout(function(){ currentTime() }, 1000);
+        let t = setTimeout(function(){ currentTime() }, 1000);
         
+    }
+
+    function updatePartOfDay() {
+        let date = new Date();
+        hour = date.getHours();
+        hour = updateTime(hour);
+
+        if (hour >= 3 && hour <= 11) {
+            return "     morning";
+        } else if (hour >= 12 && hour <= 18) {
+            return "     afternoon"
+        } else {
+            return "     evening"
+        }
     }
     
     function updateTime(k) {
@@ -34,6 +47,13 @@ function clock() {
 
     currentTime();
 
-    }
+    } 
 
 clock();
+
+const setBg = () => {
+    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+    document.body.style.backgroundColor = "#" + randomColor;
+}
+
+document.getElementById("time").addEventListener("click", setBg);
